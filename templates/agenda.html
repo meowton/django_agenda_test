@@ -1,0 +1,30 @@
+{% extends "body.html" %} {% block content %}
+  <h2>Agendamentos</h2>
+  <a href="event/">
+    <button type="button">Novo Evento</button>
+  </a>
+
+  <ul>
+    {% for event in event %}
+      <div style=
+                   {% if event.is_event_date_past %}
+                     "color: red;">
+                   {% elif event.is_event_date_due %}
+                     "color: green;">
+                   {% endif %}
+
+           <li>
+             {{ event.title }} - {{ event.get_event_date }}
+             {% if event.address %} - {{ event.address }} {% endif %}
+             <a href="event/?id={{ event.id }}&next={{ request.path }}">[ Editar </a> /
+             <a href="event/delete/{{ event.id }}/?next={{ request.path }}"> Excluir ]</a>
+           </li>
+
+      </div>
+    {% endfor %}
+  </ul>
+
+  <a href="/agenda/">[Entradas Novas]</a>
+  <a href="/agenda/old/">[Entradas Antigas]</a>
+
+{% endblock %}
